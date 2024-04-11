@@ -1,0 +1,4 @@
+Python==3.11
+Flask==2.0.1
+pycryptodome==3.10.1
+Werkzeug==2.0.1

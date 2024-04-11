@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Management System</title>
+    <style>
+        .file-upload-container {
+            background-color: #fff;
+            border: 2px solid #007ba7;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 10px;
+        }
+
+        .file-upload-label,
+        .btn {
+            background-color: #007ba7;
+            color: white;
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px 0;
+            width: calc(100% - 30px);
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .file-upload-label:hover,
+        .btn:hover {
+            background-color: #005f86;
+        }
+
+        .file-name {
+            display: block;
+            text-align: left;
+            padding: 0 10px;
+            color: rgb(0, 0, 0);
+        }
+
+        .file-input {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .file-input+.file-upload-label {
+            cursor: pointer;
+        }
+
+        .file-input:focus+.file-upload-label {
+            outline: 1px dotted #000;
+            outline: -webkit-focus-ring-color auto 5px;
+        }
+
+        .file-input+.file-upload-label * {
+            pointer-events: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a3f5e;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #123456;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .title {
+            margin-bottom: 20px;
+        }
+
+        input[type=file],
+        input[type=text] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #007ba7;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #005f86;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+        }
+
+        form {
+            background-color: #f7f7f7;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .section1 {
+            background-color: #2db65d;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        }
+
+
+        .section2 {
+            background-color: #ef831d;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .section3 {
+            background-color: #8f17a4;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        }
+    
+
+        .section h2 {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .section input[type="file"],
+        .section input[type="submit"] {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .section input[type="file"] {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .section input[type="submit"] {
+            background-color: #007ba7;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .section input[type="submit"]:hover {
+            background-color: #005f86;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background: #007ba7;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #005f86;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+        function showFileName(inputId, labelId) {
+            var input = document.getElementById(inputId);
+            var label = document.getElementById(labelId);
+            if (input.files.length > 0) {
+                var fileName = input.files[0].name;
+                label.textContent = fileName;
+            }
+        }
+
+        // Bind the event after the document has loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Bind the file upload event in the Public Key Encryption section
+            var fileUpload = document.getElementById('file-upload');
+            var publicKeyUpload = document.getElementById('public-key-upload');
+            if (fileUpload) {
+                fileUpload.addEventListener('change', function () {
+                    showFileName('file-upload', 'file-upload-name');
+                });
+            }
+            if (publicKeyUpload) {
+                publicKeyUpload.addEventListener('change', function () {
+                    showFileName('public-key-upload', 'public-key-upload-name');
+                });
+            }
+
+            // Bind the file upload event of the Private Key Decryption section
+            var encryptedFileUpload = document.getElementById('encrypted-file-upload');
+            var privateKeyUpload = document.getElementById('private-key-upload');
+            if (encryptedFileUpload) {
+                encryptedFileUpload.addEventListener('change', function () {
+                    showFileName('encrypted-file-upload', 'encrypted-file-upload-name');
+                });
+            }
+            if (privateKeyUpload) {
+                privateKeyUpload.addEventListener('change', function () {
+                    showFileName('private-key-upload', 'private-key-upload-name');
+                });
+            }
+        });
+
+        function submitForm(event, formId) {
+            event.preventDefault(); // Prevents the default submission behavior of the form
+            var form = document.getElementById(formId);
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+            xhr.open(form.method, form.action, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    var status = xhr.status;
+                    var response = JSON.parse(xhr.responseText);
+                    if (status === 0 || (status >= 200 && status < 400)) {
+                        // If the request is successful, the file download logic can be handled, such as redirecting to the download link
+                        // Clear the password in the encrypted form
+                        document.querySelector('#form-encrypt input[type="password"]').value = '';
+
+                        // Parse the JSON data in the response to get the download URL
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.download_url) {
+                            // Trigger download
+                            window.location.href = response.download_url;
+                        } else {
+                            // Handle the case where the server response does not contain a 'download_url'
+                        }
+                    } else if (formId === 'form-decrypt' && status === 400) {
+                        // The decryption error message is displayed
+                        document.getElementById('decrypt-error').textContent = 'Incorrect password, unable to decrypt.';
+                        // Clear the password input box
+                        document.querySelector('#form-decrypt input[type="password"]').value = '';
+                    } else if (formId === 'form-encryptK' && status === 400) {
+                        document.getElementById('encryptK-error').textContent = response.error;
+                    } else if (formId === 'form-decryptK' && status === 400) {
+                        document.getElementById('decryptK-error').textContent = response.error;
+                    }
+                    if (formId === 'form-encrypt' && (status === 0 || (status >= 200 && status < 400))) {
+                        // Clear the password in the encrypted form
+                        document.querySelector('#form-encrypt input[type="password"]').value = '';
+                    }
+                }
+            };
+            xhr.send(formData); // Asynchronously send form data
+        }
+
+        document.getElementById('form-encryptK').onsubmit = function (event) {
+            submitForm(event, 'form-encryptK');
+        };
+        document.getElementById('form-decrypKt').onsubmit = function (event) {
+            submitForm(event, 'form-decryptK');
+        };
+
+
+    </script>
+
+    <div class="container">
+
+        <h1 class="title">File Management System</h1>
+
+        <form id="form-encrypt" action="/encrypt" method="post" enctype="multipart/form-data"
+            onsubmit="submitForm(event, 'form-encrypt')">
+            <div class="file-upload-container">
+                <input type="file" name="file" id="file-encrypt" class="file-input" required
+                    onchange="showFileName('file-encrypt', 'file-encrypt-name')">
+                <label for="file-encrypt" class="file-upload-label">Upload File</label>
+                <span id="file-encrypt-name" class="file-name"></span>
+            </div>
+            <input type="password" name="password" placeholder="Enter Password" required><br>
+            <button type="submit">Encrypt File</button>
+        </form>
+
+        <form id="form-decrypt" action="/decrypt" method="post" enctype="multipart/form-data"
+            onsubmit="submitForm(event, 'form-decrypt')">
+            <div class="file-upload-container">
+                <input type="file" name="file" id="file-decrypt" class="file-input" required
+                    onchange="showFileName('file-decrypt', 'file-decrypt-name')">
+                <label for="file-decrypt" class="file-upload-label">Upload File</label>
+                <span id="file-decrypt-name" class="file-name"></span>
+            </div>
+            <input type="password" name="password" placeholder="Enter Password" required><br>
+            <button type="submit">Decrypt File</button>
+            <div id="decrypt-error" style="color: red;"></div>
+        </form>
+        <!-- <div id="decrypt-error" style="color: red;"></div> -->
+        
+        <div class="section3">
+            <h2>Key Generation</h2>
+            <button onclick="window.location.href='/generate_key'">Generate Key Pair</button>
+        </div>
+        
+        <!-- <a href="/generate_key" class="btn">Generate Key Pair</a> -->
+
+        <!-- &nbsp; -->
+
+
+        <div class="section1">
+            <h2>Public Key Encryption</h2>
+            <form action="/encrypt_with_public" method="post" enctype="multipart/form-data" id="form-encryptK"
+                onsubmit="submitForm(event, 'form-encryptK')">
+                <div class="file-upload-container">
+                    <input type="file" name="file" id="file-upload" class="file-input" required>
+                    <label for="file-upload" class="file-upload-label">Upload File</label>
+                    <span id="file-upload-name" class="file-name"></span>
+                </div>
+                <div class="file-upload-container">
+                    <input type="file" name="public_key" id="public-key-upload" class="file-input" required>
+                    <label for="public-key-upload" class="file-upload-label">Upload Public Key</label>
+                    <span id="public-key-upload-name" class="file-name"></span>
+                </div>
+                <button type="submit" class="btn">Encrypt File</button>
+                <div id="encryptK-error" style="color: red;"></div>
+            </form>
+        </div>
+
+        <div class="section2">
+            <h2>Private Key Decryption</h2>
+            <form action="/decrypt_with_private" method="post" enctype="multipart/form-data" id="form-decryptK"
+                onsubmit="submitForm(event, 'form-decryptK')">
+                <div class="file-upload-container">
+                    <input type="file" name="encrypted_file" id="encrypted-file-upload" class="file-input" required>
+                    <label for="encrypted-file-upload" class="file-upload-label">Upload Encrypted File</label>
+                    <span id="encrypted-file-upload-name" class="file-name"></span>
+                </div>
+                <div class="file-upload-container">
+                    <input type="file" name="private_key" id="private-key-upload" class="file-input" required>
+                    <label for="private-key-upload" class="file-upload-label">Upload Private Key</label>
+                    <span id="private-key-upload-name" class="file-name"></span>
+                </div>
+                <button type="submit" class="btn">Decrypt File</button>
+                <div id="decryptK-error" style="color: red;"></div>
+            </form>
+        </div>
+        <div class="footer">
+            © 2024 Secure File Management System
+        </div>
+    </div>
+</body>
+
+</html>
