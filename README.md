@@ -15,21 +15,22 @@ The Secure File Management System is a web application designed to provide secur
 ```bash
 git clone https://github.com/ylexLiao/secure-file-management-system.git
 cd secure-file-management-system
+```
 
 2. **Set up a virtual environment (optional but recommended)**
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-
+```
 3. **Install required packages**
 ```bash
 pip install -r requirements.txt
-
+```
 ## Usage
 - **Start the application**
 ```bash
 python app.py
-
+```
 ## Access the application
 Open a web browser and navigate to http://127.0.0.1:5000/ to access the Secure File Management System.
 
